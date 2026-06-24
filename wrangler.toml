@@ -1,0 +1,11 @@
+name = "market-monitor"
+pages_build_output_dir = "dist"
+main = "src/index.ts"
+
+[env.production]
+vars = { ENVIRONMENT = "production" }
+
+[[kv_namespaces]]
+binding = "PORTFOLIO_KV"
+id = "YOUR_KV_ID"
+preview_id = "YOUR_PREVIEW_KV_ID"
