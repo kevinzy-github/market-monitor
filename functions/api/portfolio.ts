@@ -2,10 +2,28 @@ interface Env {
   PORTFOLIO_KV: KVNamespace
 }
 
+function getUsername(request: Request): string | null {
+  const authHeader = request.headers.get('Authorization')
+  if (!authHeader?.startsWith('Bearer ')) {
+    return null
+  }
+  const token = authHeader.slice(7)
+  const userHeader = request.headers.get('X-Username')
+  return userHeader || null
+}
+
 export const onRequest: PagesFunction<Env> = async (context) => {
   const { request, env } = context
 
-  const PORTFOLIO_KEY = 'portfolio_data'
+  const username = getUsername(request)
+  if (!username) {
+    return new Response(JSON.stringify({ error: '未授权' }), {
+      status: 401,
+      headers: { 'Content-Type': 'application/json' }
+    })
+  }
+
+  const PORTFOLIO_KEY = `portfolio_${username}`
 
   if (request.method === 'GET') {
     try {
@@ -63,7 +81,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type'
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Username'
       }
     })
   }

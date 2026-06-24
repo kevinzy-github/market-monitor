@@ -6,9 +6,21 @@ export const usePortfolioStore = defineStore('portfolio', () => {
   const items = ref<PortfolioItem[]>([])
   const fundDataMap = ref<Record<string, any>>({})
 
+  const getAuthHeaders = () => {
+    const token = localStorage.getItem('auth_token')
+    const username = localStorage.getItem('username')
+    return {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+      'X-Username': username || ''
+    }
+  }
+
   const fetchPortfolio = async () => {
     try {
-      const res = await fetch('/api/portfolio')
+      const res = await fetch('/api/portfolio', {
+        headers: getAuthHeaders()
+      })
       if (res.ok) {
         items.value = await res.json()
       }
@@ -21,7 +33,7 @@ export const usePortfolioStore = defineStore('portfolio', () => {
     try {
       await fetch('/api/portfolio', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: getAuthHeaders(),
         body: JSON.stringify(items.value)
       })
     } catch (error) {
