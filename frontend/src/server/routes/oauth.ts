@@ -28,7 +28,10 @@ oauth.get('/oauth/:provider/callback', async (c) => {
   if (!config) return c.json({ error: 'OAuth 未配置' }, 501)
   const baseUrl = getBaseUrl(c.env, c.req.raw)
   const { code, state: stateParam, error: oauthError } = c.req.query()
-  if (oauthError) return c.redirect(`${baseUrl}/oauth/callback?oauth_error=${encodeURIComponent(oauthError)}`)
+  if (oauthError) {
+    const desc = c.req.query('error_description') || ''
+    return c.redirect(`${baseUrl}/oauth/callback?oauth_error=${encodeURIComponent(oauthError + (desc ? ': ' + desc : ''))}`)
+  }
   if (!code || !stateParam) return c.json({ error: '缺少认证参数' }, 400)
   const cookies = Object.fromEntries((c.req.header('Cookie') || '').split(';').filter(Boolean).map(c => { const [k, ...v] = c.trim().split('='); return [k, decodeURIComponent(v.join('='))] }))
   if (cookies['oauth_state'] !== stateParam) return c.json({ error: 'state 验证失败' }, 400)

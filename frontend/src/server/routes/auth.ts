@@ -27,9 +27,7 @@ auth.post('/login', async (c) => {
 
 auth.get('/me', authMiddleware, async (c) => {
   const user = c.get('user')
-  const ud = await c.env.PORTFOLIO_KV.get(`user:${user.username}`, 'json') as any
-  if (!ud) return c.json({ error: '用户不存在' }, 404)
-  return c.json({ userId: ud.userId, username: ud.username, createdAt: ud.createdAt })
+  return c.json({ userId: user.userId, username: user.username })
 })
 
 export { auth as authRoutes }

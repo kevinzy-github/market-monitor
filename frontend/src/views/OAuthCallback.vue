@@ -19,7 +19,8 @@ const message = ref('登录中...')
 
 onMounted(async () => {
   const token = route.query.token as string
-  if (route.query.oauth_error) { message.value = '登录失败，请重试'; return setTimeout(() => router.replace('/login'), 1500) }
+  const oauthError = route.query.oauth_error as string
+  if (oauthError) { message.value = '登录失败: ' + oauthError; return setTimeout(() => router.replace('/login'), 3000) }
   if (token) {
     localStorage.setItem('auth_token', token)
     authStore.token = token
