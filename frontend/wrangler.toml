@@ -1,0 +1,13 @@
+name = "market-monitor"
+compatibility_date = "2024-06-01"
+pages_build_output_dir = "./dist"
+
+# KV 绑定（给 Pages Functions 使用）
+[[kv_namespaces]]
+binding = "PORTFOLIO_KV"
+id = "f6d157714efb4abaaad6767454c309f8"
+preview_id = "f6d157714efb4abaaad6767454c309f8"
+
+[vars]
+JWT_SECRET = "828bfc0b4169d7e17070d13e1d5b05686a710384b18f0ee32dff4e3b2b0aab2f"
+BASE_URL = "https://market-monitor-3fv.pages.dev"
