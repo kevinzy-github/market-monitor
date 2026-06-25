@@ -1,13 +1,9 @@
 {
   "name": "market-monitor",
-  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"cd frontend && npx vite\" \"cd frontend && npx wrangler pages dev functions --port 8787\"",
-    "build": "cd frontend && npx vite build",
-    "deploy": "cd frontend && npm run build && npx wrangler pages deploy ./dist"
-  },
-  "devDependencies": {
-    "concurrently": "^8.2.0"
+    "dev": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "deploy": "cd frontend && npm run deploy"
   }
 }
