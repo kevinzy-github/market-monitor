@@ -3,12 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"npm run dev:worker\" \"npm run dev:frontend\"",
-    "dev:frontend": "cd frontend && npx vite",
-    "dev:worker": "cd worker && npx wrangler dev --port 8787",
+    "dev": "concurrently \"cd frontend && npx vite\" \"cd frontend && npx wrangler pages dev functions --port 8787\"",
     "build": "cd frontend && npx vite build",
-    "deploy:frontend": "cd frontend && npm run build && npx wrangler pages deploy ./dist",
-    "deploy:worker": "cd worker && npx wrangler deploy"
+    "deploy": "cd frontend && npm run build && npx wrangler pages deploy ./dist"
   },
   "devDependencies": {
     "concurrently": "^8.2.0"

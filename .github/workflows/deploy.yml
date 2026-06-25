@@ -6,8 +6,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy-frontend:
-    name: 部署前端 (Pages)
+  deploy:
+    name: 构建 & 部署 (Pages)
     runs-on: ubuntu-latest
     defaults:
       run:

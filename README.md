@@ -5,27 +5,21 @@
 ## 项目结构
 
 ```
-├── frontend/           # Vue 前端 + Pages Functions 后端
+├── frontend/           # 前端 + 后端（统一 Pages 部署）
 │   ├── src/
 │   │   ├── api/        #   API 客户端
 │   │   ├── components/ #   Vue 组件
 │   │   ├── router/     #   Vue Router
 │   │   ├── stores/     #   Pinia 状态管理
 │   │   ├── views/      #   页面视图
-│   │   └── server/     #   Hono 后端（Pages Functions 部署用）
-│   ├── functions/      #   Cloudflare Pages Functions
+│   │   └── server/     #   Hono 后端（Pages Functions）
+│   ├── functions/      #   Cloudflare Pages Functions 入口
 │   ├── public/         #   静态资源 / PWA 图标
 │   ├── vite.config.ts
 │   └── wrangler.toml
 │
-├── worker/             # Hono 后端（独立 Worker 部署用）
-│   ├── src/
-│   │   ├── middleware/ #   认证中间件
-│   │   └── routes/     #   API 路由
-│   └── wrangler.toml
-│
 ├── .github/workflows/  # CI/CD 自动部署
-└── package.json        # 统一脚本
+└── package.json        # 脚本
 ```
 
 ## 本地开发
