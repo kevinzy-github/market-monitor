@@ -13,11 +13,13 @@ const oauth = new Hono<{ Bindings: { PORTFOLIO_KV: KVNamespace; JWT_SECRET: stri
 oauth.get('/oauth/:provider', async (c) => {
   const provider = c.req.param('provider')
   const config = OAUTH_CONFIGS[provider]?.(c.env)
-  if (!config) return c.json({ error: `${provider} 登录尚未配置` }, 501)
+  if (!config) return c.json({ error: provider + ' 登录尚未配置' }, 501)
   const baseUrl = getBaseUrl(c.env, c.req.raw)
   const state = crypto.randomUUID()
-  const stateStr = `${state}:${provider}`
-  return new Response(null, { status: 302, headers: { Location: `${config.authorizeUrl}?${new URLSearchParams({ client_id: config.clientId, redirect_uri: `${baseUrl}/api/auth/oauth/${provider}/callback`, response_type: 'code', scope: config.scope, state: stateStr })}$, 'Set-Cookie': `oauth_state=${encodeURIComponent(stateStr)}; Max-Age=600; Path=/; HttpOnly; SameSite=Lax` } })
+  const stateStr = state + ':' + provider
+  const redirectUri = baseUrl + '/api/auth/oauth/' + provider + '/callback'
+  const params = new URLSearchParams({ client_id: config.clientId, redirect_uri: redirectUri, response_type: 'code', scope: config.scope, state: stateStr })
+  return new Response(null, { status: 302, headers: { Location: config.authorizeUrl + '?' + params.toString(), 'Set-Cookie': 'oauth_state=' + encodeURIComponent(stateStr) + '; Max-Age=600; Path=/; HttpOnly; SameSite=Lax' } })
 })
 
 oauth.get('/oauth/:provider/callback', async (c) => {
