@@ -11,3 +11,8 @@ preview_id = "f6d157714efb4abaaad6767454c309f8"
 [vars]
 JWT_SECRET = "828bfc0b4169d7e17070d13e1d5b05686a710384b18f0ee32dff4e3b2b0aab2f"
 BASE_URL = "https://market-monitor-3fv.pages.dev"
+# OAuth — 通过 Cloudflare Dashboard 设置
+# GOOGLE_CLIENT_ID = ""
+# GOOGLE_CLIENT_SECRET = ""
+# GITHUB_CLIENT_ID = ""
+# GITHUB_CLIENT_SECRET = ""
